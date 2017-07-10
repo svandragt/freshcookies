@@ -1,0 +1,10 @@
+{
+  "name": "FreshCookies",
+  "description": "Limit the maximum age of web cookies for your privacy benefit.",
+  "version": "0.2",
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "permissions": [ "cookies", "tabs", "http://*/*", "https://*/*" ],
+  "manifest_version": 2
+}
