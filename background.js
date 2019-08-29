@@ -1,42 +1,43 @@
-chrome.cookies.onChanged.addListener( function(changeInfo) {
+const _browser = browser || chrome;
 
-	var cookie = changeInfo.cookie;
-	
-	var name = cookie.name;
-	var domain = cookie.domain;
-	var value = cookie.value;
+_browser.cookies.onChanged.addListener(cookieChanged);
 
-	var maxCookieAge = 10; // days
+function cookieChanged(changeInfo) {
+    if (changeInfo.cause == "expired" || changeInfo.cause == "evicted" || changeInfo.removed) {
+        return;
+    }
 
+    const cookie = changeInfo.cookie;
+    const maxCookieAge = 15; // days
 
- 	if(changeInfo.cause == "expired" || changeInfo.cause == "evicted" || changeInfo.removed) {
-		return;
- 	}
-	
-	var maxAllowedExpiration = Math.round((new Date).getTime()/1000) + (maxCookieAge * 3600 * 24);
+    const maxAllowedExpiration = Math.round((new Date).getTime() / 1000) + (maxCookieAge * 3600 * 24);
 
-	if(cookie.expirationDate != undefined && cookie.expirationDate > maxAllowedExpiration+60) {
+    if (cookie.expirationDate != undefined && cookie.expirationDate > maxAllowedExpiration + 600 && !cookie.session) {
+        var newCookie = {};
+        //If no real url is available use: "https://" : "http://" + domain + path
+        newCookie.url = "http" + ((cookie.secure) ? "s" : "") + "://" + cookie.domain + cookie.path;
+        newCookie.name = cookie.name;
+        newCookie.value = cookie.value;
+        if (!cookie.hostOnly) {
+            if (console) {
+                console.debug(cookie.hostOnly, cookie.domain, newCookie.url);
+            }
+            // This causes errors on Firefox
+            if (chrome) {
+                newCookie.domain = cookie.domain;
+            }
+        }
+        newCookie.path = cookie.path;
+        newCookie.secure = cookie.secure;
+        newCookie.httpOnly = cookie.httpOnly;
+        newCookie.storeId = cookie.storeId;
 
-		var newCookie = {};
-		//If no real url is available use: "https://" : "http://" + domain + path
-		newCookie.url = "http" + ((cookie.secure) ? "s" : "") + "://" + cookie.domain + cookie.path;
-		newCookie.name = cookie.name;
-		newCookie.value = cookie.value;
-		if(!cookie.hostOnly) {
-		    newCookie.domain = cookie.domain;
-		}
-		newCookie.path = cookie.path;
-		newCookie.secure = cookie.secure;
-		newCookie.httpOnly = cookie.httpOnly;
-		if(!cookie.session) {
-		    newCookie.expirationDate = cookie.expirationDate;
-		}
-		newCookie.storeId = cookie.storeId;
-
-		if(!cookie.session) {
-			newCookie.expirationDate = maxAllowedExpiration;
-		}
-		chrome.cookies.set(newCookie);
-		console.log("Cookie Shortened! Name:'"+cookie.name+"' from '"+cookie.expirationDate+"' to '"+maxAllowedExpiration+"'");
-	}
-});
+        newCookie.expirationDate = maxAllowedExpiration;
+        let thenCookieSet = _browser.cookies.set(newCookie).then(cookie => {
+            console.info("Cookie Shortened! Name:'" + cookie.name + "' to '" + maxAllowedExpiration + "'");
+            return cookie;
+        }, reason => {
+            console.error(reason); // Error!
+        });
+    }
+}

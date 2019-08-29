@@ -1,10 +1,19 @@
 {
+  "manifest_version": 2,
   "name": "Fresh Cookies",
   "description": "Limit the maximum age of web cookies for your privacy benefit.",
-  "version": "0.2",
+  "version": "0.3",
+
+  "applications": {
+    "gecko": {
+      "strict_min_version": "54.0a1"
+    }
+  },
+
   "background": {
     "scripts": ["background.js"]
   },
-  "permissions": [ "cookies", "tabs", "http://*/*", "https://*/*" ],
-  "manifest_version": 2
+
+  "permissions": [ "cookies", "http://*/*", "https://*/*" ]
+  
 }
