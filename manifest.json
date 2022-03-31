@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Fresh Cookies",
   "description": "Limit the maximum age of web cookies for your privacy benefit.",
-  "version": "0.3",
+  "version": "0.3.1",
 
   "applications": {
     "gecko": {
@@ -15,5 +15,4 @@
   },
 
   "permissions": [ "cookies", "http://*/*", "https://*/*" ]
-  
 }
