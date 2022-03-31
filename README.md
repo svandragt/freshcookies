@@ -19,4 +19,4 @@ On Firefox:
 Feedback welcome, open issues!
 
 # How to use it
-After loading the extension, it starts intercepts any new/changed cookies with a long expiry date and sets it to a manageable 15 days. This will mean you're logging into systems every 2 weeks or os, however it also means tracking via cookies is limited in between website visits.
+After loading the extension, it limits any cookie with an expiry date of over 15 days. This will mean you're logging into systems every 2 weeks or so, however it also means tracking via cookies is limited in between website visits.
