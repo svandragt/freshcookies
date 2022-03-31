@@ -1,6 +1,24 @@
 const _browser = browser || chrome;
 
+let _settings = {
+    'maxExpiryDays': 15,
+};
+
 _browser.cookies.onChanged.addListener(cookieChanged);
+
+function onError(error) {
+    console.error(error);
+}
+
+function onGot(item) {
+    if (item.maxExpiryDays) {
+        _settings.maxExpiryDays = item.maxExpiryDays;
+        console.info("Changed _settings.maxExpiryDays:" + _settings.maxExpiryDays);
+    }
+}
+
+let getting = browser.storage.sync.get("maxExpiryDays");
+getting.then(onGot, onError);
 
 console.info('Fresh Cookies loaded.');
 
@@ -14,10 +32,9 @@ function cookieChanged(changeInfo) {
     }
 
     const cookie = changeInfo.cookie;
-    const maxCookieAgeDays = 15;
     const bufferTimeMinutes = 10;
 
-    const maxAllowedExpiration = Math.round((new Date).getTime() / 1000) + (maxCookieAgeDays * 3600 * 24);
+    const maxAllowedExpiration = Math.round((new Date).getTime() / 1000) + (_settings.maxExpiryDays * 3600 * 24);
 
     if (!cookie.session && cookie.expirationDate != undefined && cookie.expirationDate > maxAllowedExpiration + (bufferTimeMinutes * 60)) {
         // TODO can I just clone cookie and amend?

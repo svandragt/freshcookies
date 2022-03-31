@@ -2,17 +2,21 @@
   "manifest_version": 2,
   "name": "Fresh Cookies",
   "description": "Limit the maximum age of web cookies for your privacy benefit.",
-  "version": "0.3.1",
+  "version": "0.4.0",
 
-  "applications": {
-    "gecko": {
-      "strict_min_version": "54.0a1"
-    }
+  "options_ui": {
+    "page": "options.html"
   },
 
   "background": {
     "scripts": ["background.js"]
   },
 
-  "permissions": [ "cookies", "http://*/*", "https://*/*" ]
+  "permissions": ["cookies", "http://*/*", "https://*/*", "storage"],
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "freshcookies@vandragt.com"
+    }
+  }
 }
