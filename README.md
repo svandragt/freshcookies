@@ -19,4 +19,6 @@ On Firefox:
 Feedback welcome, open issues!
 
 # How to use it
-After loading the extension, it limits any cookie with an expiry date of over 15 days. This will mean you're logging into systems every 2 weeks or so, however it also means tracking via cookies is limited in between website visits.
+By default the extension limits new cookies to an expiry date of 15 days. This will mean you're logging into systems every 2 weeks or so, however it also means tracking via cookies is limited in between website visits.
+
+There is a preference to change this to be more or less agressive.
