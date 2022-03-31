@@ -34,18 +34,12 @@ function cookieChanged(changeInfo) {
         newCookie.url = "http" + ((cookie.secure) ? "s" : "") + "://" + cookie.domain.substring(1) + cookie.path;
 
         if (!cookie.hostOnly) {
-            if (console) {
-                console.debug(cookie.hostOnly, cookie.domain, newCookie.url);
-            }
-            // This causes errors on Firefox
-            if (chrome) {
-                newCookie.domain = cookie.domain;
-            }
+            newCookie.domain = cookie.domain;
         }
 
-        let thenCookieSet = _browser.cookies.set(newCookie).then(cookie => {
-            console.info("Cookie Shortened! Name:'" + cookie.name + "' to '" + maxAllowedExpiration + "'");
-            return cookie;
+        let thenCookieSet = _browser.cookies.set(newCookie).then(ck => {
+            console.info("Cookie Shortened! Name:'" + ck.name + "' to '" + ck.expirationDate + "'");
+            return ck;
         }, reason => {
             console.error(reason); // Error!
         });
