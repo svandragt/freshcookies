@@ -1,5 +1,11 @@
 # Fresh Cookies
-Helps protect your privacy a little by limiting the maximum expiry date of any cookie to 15 days.
+Did you know many websites store information on your device for years? Cookies can contain unique identifiers, which can link you up to previous visits. But clearing out all your cookies is a pain, and managing them can be time intensive.
+
+Fresh Cookies limits the maximum age of new web cookies for your privacy benefit.
+
+(This addon is marked experimental as I'm looking for your feedback on how this works for you)
+
+The default is 15 days, but you can change this to between 1 and 30 days.
 
 # How to install
 As this extension is not on the Play Store yet:
@@ -11,14 +17,9 @@ On Chrome / Vivaldi:
 2. Enable Developer Mode
 3. Load unpacked extension > navigate to the folder of step 1
 
-On Firefox:
+On Firefox the extension can be installed from the Addon Directory. Alternatively:
 
 2. Open the Addons Manager screen (hamburger menu > Addons)
 3. Cog > Debug Addons > Load Temporary Addon... and navigate to the folder of step 1.
 
 Feedback welcome, open issues!
-
-# How to use it
-By default the extension limits new cookies to an expiry date of 15 days. This will mean you're logging into systems every 2 weeks or so, however it also means tracking via cookies is limited in between website visits.
-
-There is a preference to change this to be more or less agressive.
