@@ -19,7 +19,6 @@ function restoreOptions() {
 
   let getting = browser.storage.sync.get("maxExpiryDays");
   getting.then(setCurrentChoice, onError);
-  document.querySelector("#maxExpiryDays")
 }
 
 document.addEventListener("DOMContentLoaded", restoreOptions);
